@@ -1,0 +1,4 @@
+#ifndef TAPEWORM_LEXER_H
+#define TAPEWORM_LEXER_H
+
+#endif //TAPEWORM_LEXER_H

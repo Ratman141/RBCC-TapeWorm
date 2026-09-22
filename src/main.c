@@ -41,9 +41,8 @@ int main(int argc, char *argv[]) {
     flags_init();
 
     printf("%d", argc);
-    if (argc < 2) {
-        printf("Not enough arguments\n");
-        return 1;
+    if (argc == 1) {
+
     }
     FILE* fptr;
     return 0;

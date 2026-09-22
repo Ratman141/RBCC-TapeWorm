@@ -1,0 +1,4 @@
+#ifndef TAPEWORM_PARSER_H
+#define TAPEWORM_PARSER_H
+
+#endif //TAPEWORM_PARSER_H
