@@ -11,7 +11,6 @@ struct {
     bool trace;         // --trace
     bool wall;          // -Wall
     bool strict;        // --strict
-    bool wrap;          // --no-wrap
     bool interpret;     // -r, --run
     bool compile_only;  // -C, --compile-only
     char *output_file;  // -o, --output <file>
@@ -28,7 +27,6 @@ void flags_init(void) {
     flags.trace = false;
     flags.wall = true;
     flags.strict = false;
-    flags.wrap = true;
     flags.interpret = false;
     flags.compile_only = true;
     flags.output_file = "a.worm";
@@ -40,10 +38,17 @@ void flags_init(void) {
 int main(int argc, char *argv[]) {
     flags_init();
 
-    printf("%d", argc);
+    char *sample =
+        "++++[>+++++<-]>[<+++++>-]+<+[\n"
+        "   >[>+>+<<-]++>>[<<+>>-]>>>[-]++>[-]+\n"
+        "   >>>+[[-]++++++>>>]<<<[[<++++++++<++>>-]+<.<[>----<-]<]\n"
+        "   <<[>>>>>[>>>[-]+++++++++<[>-<-]+++++++++>[-[<->-]+[<<<]]<[>+<-]>]<<-]<<-\n"
+        "]";
+
+    printf("%d", argc);     // Check amount of args
+
     if (argc == 1) {
 
     }
-    FILE* fptr;
     return 0;
 }

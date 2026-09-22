@@ -1,2 +1,2 @@
 # TapeWorm
-A Revolutionary BrainF*ck Compiler
+A Revolutionary BrainF*ck Compiler Collection
