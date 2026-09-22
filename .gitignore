@@ -1,0 +1,7 @@
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+build/
+out/
+Makefile
+.idea/
