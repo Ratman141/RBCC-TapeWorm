@@ -23,13 +23,13 @@ typedef struct {
     token_t *tokens;
     size_t count;
     size_t size;
-} TokenVector;
+} vector;
 
-void TokenVector_init(TokenVector *v);
+void vector_init(vector *v);
 
-void TokenVector_free (TokenVector *v);
+void vector_free (vector *v);
 
-void TokenVector_push (TokenVector *v, token_t t);
+void vector_push (vector *v, token_t t);
 
-TokenVector tokenize(char *src);
+vector tokenize(const char *src);
 #endif //TAPEWORM_LEXER_H
