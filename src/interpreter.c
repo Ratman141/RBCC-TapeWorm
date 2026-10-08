@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 
-void interpret(const instrVector *vec, indexSet *set, unsigned char *tape, int *index){
+void interpret(const instrVector *vec, unsigned char *tape, int *index){
     size_t len = vec->count;
     size_t counter = 0;
     while (counter < len) {
@@ -25,12 +25,12 @@ void interpret(const instrVector *vec, indexSet *set, unsigned char *tape, int *
                 break;
             case IR_START:
                 if (tape[*index] == 0) {
-                    counter = set->set[counter];
+                    counter = vec->instr[counter].operand;
                 }
                 break;
             case IR_END:
                 if (tape[*index] != 0) {
-                    counter = set->set[counter];
+                    counter = vec->instr[counter].operand;
                 }
                 break;
             case IR_EOF:
@@ -59,14 +59,12 @@ void run_repl() {
         }
 
         vector v = tokenize(input);
-        indexSet set = set_init(&v);
-        parse(&v, &set);
-        instrVector vec = optimize(1, &v, &set);
+        parse(&v);
+        instrVector vec = optimize(1, &v);
 
-        interpret(&vec, &set, tape, &ptr);
+        interpret(&vec, tape, &ptr);
 
         vector_free(&v);
-        set_free(&set);
         instrVector_free(&vec);
     }
 }

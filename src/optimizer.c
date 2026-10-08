@@ -29,53 +29,8 @@ void instrVector_push(instrVector *vec, instr_t instr) {
     }
     vec->instr[vec->count] = instr;
 }
-void set_reinit(instrVector *vec, indexSet *set) {
-    set_free(set);
-    set->set = malloc(vec->count * sizeof(int));
-    set->size = vec->count;
-    if (set->set == NULL) {
-        fprintf(stderr, "[FATAL] Out of memory\n");
-        set_free(set);
-        instrVector_free(vec);
-        exit(1);
-    }
-    for (int i = 0; i < set->size; i++) {
-        set->set[i] = -1;
-    }
-}
 
-void reparse(instrVector *vec, indexSet *set) {
-    size_t len = set->size;
-    int *stack = malloc(len * sizeof(int));
-    int stackIndex = 0;
-    for (int i = 0; i < len; i++) {
-        if (vec->instr[i].type == IR_START) {
-            stack[stackIndex++] = i;
-        }
-        else if ( vec->instr[i].type == IR_END) {
-            if (stackIndex == 0) {
-                fprintf(stderr, "[ERROR] Syntax Error\n");
-                free(stack);
-                set_free(set);
-                instrVector_free(vec);
-                exit(1);
-            }
-            int startIndex = stack[--stackIndex];
-            set->set[startIndex] = i;
-            set->set[i] = startIndex;
-        }
-    }
-    if (stackIndex != 0) {
-        fprintf(stderr, "[ERROR] Syntax Error\n");
-        free(stack);
-        set_free(set);
-        instrVector_free(vec);
-        exit(1);
-    }
-    free(stack);
-}
-
-instrVector optimize(int level, const vector *v, indexSet *set) {
+instrVector optimize(int level, const vector *v) {
     instrVector vec = instrVector_init();
     instr_t instr;
     int count = 0;
@@ -117,12 +72,12 @@ instrVector optimize(int level, const vector *v, indexSet *set) {
                     break;
                 case START:
                     instr.type = IR_START;
-                    instr.operand = 0;
+                    instr.operand = v->tokens[i].pos;;
                     instrVector_push(&vec, instr);
                     break;
                 case END:
                     instr.type = IR_END;
-                    instr.operand = 0;
+                    instr.operand = v->tokens[i].pos;;
                     instrVector_push(&vec, instr);
                     break;
                 case EOF_TOKEN:
@@ -200,13 +155,13 @@ instrVector optimize(int level, const vector *v, indexSet *set) {
                     }
                     else {
                         instr.type = IR_START;
-                        instr.operand = 0;
+                        instr.operand = v->tokens[i].pos;;
                     }
                     instrVector_push(&vec, instr);
                     break;
                 case END:
                     instr.type = IR_END;
-                    instr.operand = 0;
+                    instr.operand = v->tokens[i].pos;
                     instrVector_push(&vec, instr);
                     break;
                 case EOF_TOKEN:
@@ -220,12 +175,12 @@ instrVector optimize(int level, const vector *v, indexSet *set) {
         }
     }
     if (level >= 2) {
-
+        perror("Not implemented yet");
+        exit(1);
     }
     if (level == 3) {
-
+        perror("Not implemented yet");
+        exit(1);
     }
-    set_reinit(&vec, set);
-    reparse(&vec, set);
     return vec;
 }

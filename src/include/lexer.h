@@ -17,6 +17,7 @@ typedef enum{
 
 typedef struct {
     TokenType type;
+    size_t pos;
 }token_t;
 
 typedef struct {

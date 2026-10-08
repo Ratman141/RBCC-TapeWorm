@@ -3,7 +3,7 @@
 #include "parser.h"
 #include "optimizer.h"
 
-void interpret(const instrVector *vec, indexSet *set, unsigned char *tape, int *index);
+void interpret(const instrVector *vec, unsigned char *tape, int *index);
 
 void run_repl();
 

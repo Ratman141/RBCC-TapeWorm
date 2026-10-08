@@ -31,10 +31,6 @@ void instrVector_free(instrVector *vec);
 
 void instrVector_push(instrVector *vec, instr_t instr);
 
-void set_reinit(instrVector *vec, indexSet *set);
-
-void reparse(instrVector *vec, indexSet *set);
-
-instrVector optimize(int level, const vector *v, indexSet *set);
+instrVector optimize(int level, const vector *v);
 
 #endif //TAPEWORM_OPTIMIZER_H
