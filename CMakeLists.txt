@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 4.2)
 project(TapeWorm C)
 
 set(CMAKE_C_STANDARD 11)
-
+set(CMAKE_C_STANDARD_REQUIRED ON)
 add_executable(TapeWorm src/main.c
         src/interpreter.c
         src/include/interpreter.h
@@ -13,4 +13,6 @@ add_executable(TapeWorm src/main.c
         src/optimizer.c
         src/include/optimizer.h
         src/codegen.c
-        src/include/codegen.h)
+        src/include/codegen.h
+        src/flag.c
+        src/include/flag.h)

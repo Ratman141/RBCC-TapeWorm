@@ -1,5 +1,6 @@
 #include "include/interpreter.h"
 #include "include/lexer.h"
+#include "include/flag.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -16,9 +17,12 @@ void interpret(const instrVector *vec, unsigned char *tape, int *index){
                 break;
             case IR_OUT:
                 putchar(tape[*index]);
+                printf("\n");
                 break;
             case IR_IN:
                 tape[*index] = getchar();
+                int c;                              // So far works, maybe look into it in the future
+                while ((c = getchar()) != '\n') {}  // Doesnt skip iteration in REPL
                 break;
             case SET_ZERO:
                 tape[*index] = 0;
@@ -60,7 +64,7 @@ void run_repl() {
 
         vector v = tokenize(input);
         parse(&v);
-        instrVector vec = optimize(1, &v);
+        instrVector vec = optimize(flags.optimization, &v);
 
         interpret(&vec, tape, &ptr);
 

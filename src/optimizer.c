@@ -28,6 +28,7 @@ void instrVector_push(instrVector *vec, instr_t instr) {
         vec->size = size;
     }
     vec->instr[vec->count] = instr;
+    vec->count++;
 }
 
 instrVector optimize(int level, const vector *v) {
