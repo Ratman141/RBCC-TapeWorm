@@ -1,4 +1,5 @@
 #include "include/codegen.h"
+#include "include/optimizer.h"
 #include "include/flag.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,36 +8,53 @@
 void transpile(instrVector *vec, char* output) {
     FILE *f = fopen(output, "w");
 
-    fprintf(f, "#include <stdio.h>\n"
-               "\nint main(void){\n"
-               "\tchar tape[%d];\n", flags.tape_size);
-
     if (f == NULL) {
         printf("The file is not opened.");
         exit(EXIT_FAILURE);
     }
-    for (int i = 0; i < vec->size; i++) {
-        switch (vec->instr[i].type) {
+
+    fprintf(f, "#include <stdio.h>\n"
+               "\nint main(void){\n"
+               "\tint ptr = 0;\n"
+               "\tunsigned char tape[%d] = {0};\n\n", flags.tape_size);
+
+    size_t len = vec->count;
+    size_t counter = 0;
+    unsigned long long while_index = 1;
+    while (counter < len) {
+        switch (vec->instr[counter].type) {
             case IR_ADD:
+                fprintf(f, "\ttape[ptr] += %llu;\n", vec->instr[counter].operand);
                 break;
             case IR_MOVE:
+                fprintf(f, "\tptr += %llu;\n", vec->instr[counter].operand);
                 break;
             case IR_OUT:
+                fprintf(f, "\tputchar(tape[ptr]);\n");
+                printf("\n");
                 break;
             case IR_IN:
-                break;
-            case IR_START:
-                break;
-            case IR_END:
+                fprintf(f, "\ttape[ptr] = getchar();\n");
                 break;
             case SET_ZERO:
+                fprintf(f, "\ttape[ptr] = 0;\n");
+                break;
+            case IR_START:
+                fprintf(f, "\tint index%llu = ptr;\n"
+                           "\twhile(tape[index%llu] != 0){\n", while_index, while_index);
+                while_index++;
+                break;
+            case IR_END:
+                fprintf(f, "\t}\n");
                 break;
             case IR_EOF:
-                break;
+                goto eof;
             default:
                 break;
         }
+        counter++;
     }
+    eof:
     fprintf(f, "\treturn 0;\n}");
     fclose(f);
 }

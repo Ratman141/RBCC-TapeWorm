@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdbool.h>
 #include "include/interpreter.h"
 #include "include/codegen.h"
 #include "include/flag.h"
@@ -10,6 +9,7 @@ int main(int argc, char *argv[]) {
     printf("%d", argc);     // Check amount of args
     //run_repl();
     char input[128];
+    if (fgets(input, 128, stdin) == NULL) return 1;
     vector v = tokenize(input);
     parse(&v);
     instrVector vec = optimize(flags.optimization, &v);
