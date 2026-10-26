@@ -27,7 +27,8 @@ void transpile(instrVector *vec, char* output) {
                 fprintf(f, "\ttape[ptr] += %llu;\n", vec->instr[counter].operand);
                 break;
             case IR_MOVE:
-                fprintf(f, "\tptr += %llu;\n", vec->instr[counter].operand);
+                vec->instr[counter].operand = (vec->instr[counter].operand + 30000) % 30000;
+                fprintf(f, "\tptr = (ptr + %llu) %% 30000;\n", vec->instr[counter].operand);
                 break;
             case IR_OUT:
                 fprintf(f, "\tputchar(tape[ptr]);\n");
