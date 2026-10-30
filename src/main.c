@@ -9,7 +9,7 @@
 // tapeworm <options> input_file
 int main(int argc, char *argv[]) {
     if (argc == 1) {
-        printf("Not enough arguments\n");
+        run_repl();
         return(1);
     }
     if (strcmp(argv[1], "--help") == 0) {
@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
         printf("\t-Wall\tEnable all compiler warnings\n");
         printf("\t--strict\tEnable strict mode\n");
         printf("\t-r | --run\tInterpret and execute code without compiling\n");
-        printf("\t-C | --compile-only\tCompile the source without executing\n");
+        printf("\t-C | --compile\tCompile the source without executing\n");
         printf("\t-o | --output <file>\tSpecify the name of the output file\n");
         printf("\t-t | --target <arch>\tSpecify target architecture\n");
         return 0;
@@ -32,17 +32,22 @@ int main(int argc, char *argv[]) {
         printf("TapeWorm (RBCC) version %s\n", VERSION);
         return 0;
     }
-    flags_init(argc, argv);
 
-    printf("%d", argc);     // Check amount of args
-    //run_repl();
-    char input[128];
-    if (fgets(input, 128, stdin) == NULL) return 1;
-    vector v = tokenize(input);
+    flags_init(argc, argv);
+    vector v = tokenize(flags.input_file);
     parse(&v);
     instrVector vec = optimize(flags.optimization, &v);
+    if (flags.interpret == true) {
+        int index = 0;
+        unsigned char tape[flags.tape_size];
+        interpret(&vec, tape, &index);
+    }
+    if (flags.transpile == true) {
+        transpile(&vec, "tape.c");
+    }
+    if (flags.compile == true) {
 
-    transpile(&vec, "tape.c");
+    }
 
     vector_free(&v);
     instrVector_free(&vec);

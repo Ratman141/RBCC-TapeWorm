@@ -13,7 +13,8 @@ struct conf{
     bool wall;          // -Wall
     bool strict;        // --strict
     bool interpret;     // -r, --run
-    bool compile_only;  // -C, --compile-only
+    bool compile;  // -C, --compile
+    bool transpile; //-T, --transpile
     char *output_file;  // -o, --output <file>
     char *target;       // -t, --target <arch>
     char *input_file;
