@@ -15,4 +15,6 @@ typedef enum {
 
 void transpile(instrVector *vec, char* output);
 
+void compile(instrVector *vec, char* output);
+
 #endif //TAPEWORM_CODEGEN_H

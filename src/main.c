@@ -17,11 +17,7 @@ int main(int argc, char *argv[]) {
         printf("Options:\n");
         printf("\t--tape-size <n>\tSet tape size\n");
         printf("\t-O<level>\tSet optimization level\n");
-        printf("\t-g | --debug\tEnable debug mode\n");
-        printf("\t-v | --verbose\tDisplay more detailed information during execution\n");
-        printf("\t--trace\tEnable detailed execution tracing\n");
         printf("\t-Wall\tEnable all compiler warnings\n");
-        printf("\t--strict\tEnable strict mode\n");
         printf("\t-r | --run\tInterpret and execute code without compiling\n");
         printf("\t-C | --compile\tCompile the source without executing\n");
         printf("\t-o | --output <file>\tSpecify the name of the output file\n");
@@ -43,7 +39,7 @@ int main(int argc, char *argv[]) {
         interpret(&vec, tape, &index);
     }
     if (flags.transpile == true) {
-        transpile(&vec, "tape.c");
+        transpile(&vec, flags.output_file);
     }
     if (flags.compile == true) {
 

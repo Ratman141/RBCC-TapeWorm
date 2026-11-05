@@ -7,11 +7,7 @@
 struct conf{
     int tape_size;      // --tape-size <n>
     int optimization;   // -00, -01, -02, -03
-    bool debug;         // -g, --debug
-    bool verbose;       // -v, --verbose
-    bool trace;         // --trace
     bool wall;          // -Wall
-    bool strict;        // --strict
     bool interpret;     // -r, --run
     bool compile;  // -C, --compile
     bool transpile; //-T, --transpile
